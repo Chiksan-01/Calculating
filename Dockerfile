@@ -13,25 +13,11 @@ ENV PORT=8080
 # упирался бы в connection refused при полностью рабочем приложении.
 ENV HOST=0.0.0.0
 
-# Investing.com целиком закрыт Cloudflare Bot Fight Mode: любой не-браузерный
-# клиент получает 403 по TLS-отпечатку ещё до заголовков (проверены сайт,
-# api.investing.com, мобильный API, tvc-бэкенды графиков и ssltools-виджеты).
-# Поэтому источник читается настоящим браузером через DevTools Protocol
-# (lib/browser.js), а в образе стоит chromium (+750 МБ). Путь передаётся через
-# CHROME_PATH, иначе findBrowser() ищет google-chrome и не находит. Без chromium
-# контейнер не ломается — каждый источник в fetchAllRates независим, — но эта
-# котировка молча пропадала бы из /api/rates.
-# nss/freetype/harfbuzz/ttf-freefont — без них headless chromium не стартует.
-RUN apk add --no-cache chromium nss freetype harfbuzz ca-certificates ttf-freefont
-ENV CHROME_PATH=/usr/bin/chromium
-
 COPY server.js sw.js index.html manifest.webmanifest ./
 COPY lib ./lib
 COPY icons ./icons
 
-# Chromium отказывается работать от root без --no-sandbox; флаг в lib/browser.js
-# для linux уже проставлен, но запускать сервер не от root всё равно правильнее.
-# Пользователь node есть в базовом образе.
+# Не от root: пользователь node есть в базовом образе, права на запись не нужны.
 USER node
 
 EXPOSE 8080

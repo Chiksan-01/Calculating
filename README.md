@@ -21,7 +21,7 @@
 Панель справа от калькулятора:
 
 - **USDT/RUB** на биржах (bid / ask);
-- **USD/RUB**: ЦБ РФ (официальный), Profinance и Investing.com (bid / ask);
+- **USD/RUB**: ЦБ РФ (официальный), Profinance и TradingView (bid / ask);
 - **Нацбанк КР** — с [valuta.kg](https://valuta.kg/);
 - **банки, обменки, МФК** — покупка и продажа USD, EUR, RUB, KZT, сортировка и фильтры.
 
@@ -73,6 +73,5 @@ $env:HOST="0.0.0.0"; node server.js
 | `sw.js` | работа без интернета |
 | `icons/` | иконки |
 | `server.js` | локальный сервер + `/api/rates` |
-| `lib/rates.js` | сбор курсов с valuta.kg, бирж, ЦБ РФ, Profinance, Investing |
-| `lib/browser.js` | фоновый Chrome/Edge для сайтов за защитой Cloudflare |
+| `lib/rates.js` | сбор курсов с valuta.kg, бирж, ЦБ РФ, Profinance, TradingView |
 | `.github/workflows/pages.yml` | публикация на Pages и обновление курсов |
